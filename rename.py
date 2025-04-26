@@ -30,11 +30,14 @@ SUB_FORMATS = {
 
 def match_pattern(filename, name, ext, dir_path):
     print("\ncall match_pattern, current name: ", filename)
-    pattern = r'\[(\d{1,2})\]'
+    pattern = r'\[(\d{1,2}(?:[vV]\d*)?)\]'
     match = re.search(pattern, name)
     if match:
-        # Extract the episode number and remove leading zero if present
-        episode = str(int(match.group(1)))
+        # Extract just the numeric part before any "v" or "V"
+        episode_str = match.group(1)
+        # Split by 'v' or 'V' and take the first part (the episode number)
+        episode_num = re.split('[vV]', episode_str)[0]
+        episode = str(int(episode_num))
         # Create new filename: episode number + original extension
         new_name = episode + ext
         old_path = os.path.join(dir_path, filename)
