@@ -61,7 +61,7 @@ def rename_episode(filename, dir_path, stats):
     name, ext = os.path.splitext(filename)
     
     if ext in SUB_FORMATS:
-        if ".cht" not in name and ".tc" not in name:
+        if ".sc" in name:
             stats['processed'] += 1
             return match_pattern(filename, name, ext, dir_path, stats)
         else:
@@ -76,6 +76,7 @@ def rename_episode(filename, dir_path, stats):
     return False
 
 def main():
+
     print("=" * 60)
     
     dir_path = input('Enter directory path: ')
@@ -90,7 +91,6 @@ def main():
         'skipped': []
     }
     
-    print(f"\nProcessing directory: {dir_path}")
     print("-" * 60)
     
     # Get all files
@@ -119,7 +119,10 @@ def main():
     if stats['renamed']:
         print("\n" + "-" * 60)
         print("Renamed files:")
-        for old, new in stats['renamed']:
+        # Sort by the episode number (extract number from new filename)
+        sorted_renamed = sorted(stats['renamed'], 
+                              key=lambda x: int(os.path.splitext(x[1])[0]))
+        for old, new in sorted_renamed:
             print(f"  {old} → {new}")
     
     # Show failed files if any
