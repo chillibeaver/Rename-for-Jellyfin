@@ -134,6 +134,7 @@ def main():
     
     print("\n" + "=" * 60)
     print("Process completed!")
+    input("\nPress Enter to exit...")
 
 if __name__ == "__main__":
     main()
