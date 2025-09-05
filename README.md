@@ -5,8 +5,7 @@ Copy paste full directory and good to go, no quotes, example:</br>
 ```plaintext
 Z:\series\SeriesName
 
-
 or use
-```plaintext
+
 python advrename [directory] [episode prefix]
 
