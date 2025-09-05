@@ -30,11 +30,15 @@ jobs:
       run: |
         pyinstaller --onefile rename.py
 
+    - name: Build executable 2
+      run: |
+        pyinstaller --onefile advrename.py
+
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: executable
-        path: dist/rename.exe
+        path: dist/*.exe
         if-no-files-found: error
 
   release:
@@ -68,4 +72,14 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: dist/rename.exe
         asset_name: rename.exe
+        asset_content_type: application/octet-stream
+
+    - name: Upload Release Asset - advrename.exe
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: dist/advrename.exe
+        asset_name: advrename.exe
         asset_content_type: application/octet-stream
