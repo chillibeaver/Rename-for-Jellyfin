@@ -49,23 +49,11 @@ jobs:
           name: executable
           path: dist/
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release and Upload
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
+          name: Release v${{ github.run_number }}
+          files: dist/rename.exe
           draft: false
           prerelease: false
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: dist/rename2.exe
-          asset_name: rename2.exe
-          asset_content_type: application/octet-stream
